@@ -84,6 +84,7 @@ return (
                 </div>
                 <div className="w-full">
                     <textarea
+                            id={isComment ? undefined : "post-composer"}
                             disabled={isLoading}
                             onChange={(e) => setBody(e.target.value)}
                             value={body}

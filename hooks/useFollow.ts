@@ -34,8 +34,10 @@ const useFollow = (userId: string) => {
 
             await request();
 
-            mutateCurrentUser();
-            mutateFetchedUser();
+            await Promise.all([
+                mutateCurrentUser(),
+                mutateFetchedUser(),
+            ]);
 
             toast.success('Success')
         } catch {

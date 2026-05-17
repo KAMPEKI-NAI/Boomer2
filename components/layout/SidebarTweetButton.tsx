@@ -1,14 +1,25 @@
 import { useCallback } from "react";
 import { FaFeather } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 import useLoginModel from "@/hooks/useLoginModel";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const SidebarTweetButton = () => {
     const loginModel = useLoginModel();
+    const { data: currentUser } = useCurrentUser();
+    const router = useRouter();
 
     const onClick = useCallback(() =>{
-        loginModel.onOpen();
-    }, [loginModel]);
+        if (!currentUser) {
+            loginModel.onOpen();
+            return;
+        }
+
+        router.push('/').then(() => {
+            document.getElementById('post-composer')?.focus();
+        });
+    }, [currentUser, loginModel, router]);
 
     return ( 
         <div onClick={onClick}>

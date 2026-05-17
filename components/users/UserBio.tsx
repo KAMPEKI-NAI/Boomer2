@@ -74,14 +74,14 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
             <div className="flex flex-row items-center mt-4 gap-6">
                 <div className="flex flex-col items-center gap-1">
                     <p className="text-white font-semibold">
-                        {fetchedUser?.followingIds.length}</p>
+                        {fetchedUser?.followingIds?.length || 0}</p>
                     <p className="text-neutral-500 text-sm">
                         Following
                         </p>
                 </div>
                 <div className="flex flex-col items-center gap-1">
                     <p className="text-white font-semibold">
-                        {fetchedUser?.followingIds.length}</p>
+                        {fetchedUser?.followersCount || 0}</p>
                     <p className="text-neutral-500 text-sm">
                         Followers
                         </p>

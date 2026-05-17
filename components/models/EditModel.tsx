@@ -10,7 +10,7 @@ import Input from "../Input";
 import ImageUpload from "../ImageUpload";
 
 const EditModel = () => {
-    const { data: currentUser } = useCurrentUser();
+    const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
     const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
     const editModel = useEditModel();
 
@@ -35,24 +35,32 @@ const EditModel = () => {
             setIsLoading(true);
 
             await axios.patch('/api/edits', {
-                name,
-                username,
-                bio,
+                name: name.trim(),
+                username: username.trim(),
+                bio: bio.trim(),
                 profileImage,
                 coverImage
             });
-            mutateFetchedUser();
+            await Promise.all([
+                mutateCurrentUser(),
+                mutateFetchedUser(),
+            ]);
 
             toast.success("Updated");
             
             editModel.onClose();
         }catch (error) {
             console.log(error);
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Something went wrong");
+                return;
+            }
+
             toast.error("Something went wrong");
         } finally {
             setIsLoading(false);
         }
-    }, [name, username, bio, profileImage, coverImage, mutateFetchedUser, editModel]);
+    }, [name, username, bio, profileImage, coverImage, mutateCurrentUser, mutateFetchedUser, editModel]);
 
     const bodyContent = (
             <div className="flex flex-col gap-4">
