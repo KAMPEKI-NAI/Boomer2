@@ -35,7 +35,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         reader.readAsDataURL(file);
     }, [handleChange]);
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    const { getRootProps, getInputProps } = useDropzone({
         maxFiles: 1,
         onDrop: handleDrop,
         disabled,
