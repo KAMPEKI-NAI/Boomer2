@@ -2,6 +2,7 @@ import { useCallback, useMemo, type MouseEvent } from 'react';
 import { useRouter } from "next/router";
 import { formatDistanceToNowStrict } from 'date-fns';
 import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from 'react-icons/ai';
+import Image from 'next/image';
 
 import useLoginModel from "@/hooks/useLoginModel";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -11,6 +12,7 @@ import Avatar from '../Avatar';
 interface Post {
     id: string;
     body: string;
+    image?: string | null;
     createdAt?: string | Date;
     user: {
         id: string;
@@ -109,9 +111,21 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                             {createdAt}
                         </span>
                     </div>
-                    <div className="text-white mt-1">
-                        {data.body}
-                    </div>
+                    {data.body ? (
+                        <div className="text-white mt-1">
+                            {data.body}
+                        </div>
+                    ) : null}
+                    {data.image ? (
+                        <div className="relative mt-3 aspect-video w-full overflow-hidden rounded-md border border-neutral-800">
+                            <Image
+                                src={data.image}
+                                alt="Post image"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    ) : null}
                     <div className="flex flex-row items-center mt-3 gap-10">
                         <div
                             className="
@@ -122,7 +136,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                                 gap-2
                                 cursor-pointer
                                 transition
-                                hover:text-[#d94f00]
+                                hover:text-[#c65f32]
                             "
                         >
                             <AiOutlineMessage size={20} />

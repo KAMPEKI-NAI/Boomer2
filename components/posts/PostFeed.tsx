@@ -7,6 +7,7 @@ interface PostFeedProps {
 type Post = {
     id: string;
     body: string;
+    image?: string | null;
     createdAt?: string | Date;
     user: {
         id: string;

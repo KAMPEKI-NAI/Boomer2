@@ -29,7 +29,7 @@ const input: React.FC<InputProps> = (
         rounded-md
         outline-none
         text-white
-        focus:border-[#d94f00]
+        focus:border-[#c65f32]
         focus:border-2transition
         disabled:bg-neutral-900
         disabled:opacity-70

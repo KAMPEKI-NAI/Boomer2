@@ -45,7 +45,7 @@ const Avatar: React.FC<AvatarProps> = ({
                     borderRadius: "100%"
                 }}
                 alt="Avatar"
-                src={fetchedUser?.image || "/images/placeholder.png"}
+                src={fetchedUser?.profileImage || fetchedUser?.image || "/images/placeholder.png"}
                 onClick={onClick}
             />
             {/* Avatar content */}

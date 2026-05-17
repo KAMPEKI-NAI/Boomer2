@@ -59,7 +59,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         hover:bg-slate-300
       '>
         <Icon size={20} color='white'/>
-        {alert ? <BsDot className="text-[#d94f00] absolute -top-4 left-0" size={70}/> : null }
+        {alert ? <BsDot className="text-[#c65f32] absolute -top-4 left-0" size={70}/> : null }
       </div>
       <div
       className='
@@ -79,7 +79,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         <p className='hidden lg:block text-white text-xl'>
           {label}
         </p>
-        {alert ? <BsDot className="text-[#d94f00] absolute -top-4 left-0" size={70}/> : null }
+        {alert ? <BsDot className="text-[#c65f32] absolute -top-4 left-0" size={70}/> : null }
       </div>
     </div>
   )

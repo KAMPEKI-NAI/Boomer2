@@ -8,6 +8,8 @@ import useRegisterModel from '@/hooks/useRegisterModel';
 import Button from './Button';
 import Avatar from './Avatar';
 import usePost from "@/hooks/usePost";
+import Image from "next/image";
+import { BsImage } from "react-icons/bs";
 
 
 interface FormProps {
@@ -29,20 +31,41 @@ const Form: React.FC<FormProps> = ({
     const { mutate: mutatePost } = usePost(postId as string);
 
     const [body, setBody] = useState('');
+    const [image, setImage] = useState('');
     const [isLoading, setLoading] = useState(false);
 
+    const onImageChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+
+        if (!file) {
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = (readerEvent: ProgressEvent<FileReader>) => {
+            const result = readerEvent.target?.result;
+
+            if (typeof result === 'string') {
+                setImage(result);
+            }
+        };
+
+        reader.readAsDataURL(file);
+    }, []);
+
     const onSubmit = useCallback(async () => {
-        console.log("button");
         try {
             setLoading(true);
 
             const url= isComment ? `/api/comments?postId=${postId}`
             : '/api/posts';
 
-            await axios.post(url, { body });
+            await axios.post(url, { body, image });
 
             toast.success('Post created');
             setBody('');
+            setImage('');
             mutatePosts();
             mutatePost();
 
@@ -52,7 +75,7 @@ const Form: React.FC<FormProps> = ({
         } finally {
             setLoading(false);
         }
-        }, [body, mutatePosts, isComment, postId, mutatePost]);
+        }, [body, image, mutatePosts, isComment, postId, mutatePost]);
 return ( 
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
         {currentUser ? (
@@ -69,7 +92,7 @@ return (
                                 peer
                                 resize-none
                                 mt-3
-                                w-ful
+                                w-full
                                 bg-black
                                 ring-0
                                 outline-none
@@ -79,6 +102,16 @@ return (
                             "
                         placeholder={placeholder}
                     ></textarea>
+                    {image && !isComment ? (
+                        <div className="relative mt-3 aspect-video w-full overflow-hidden rounded-md border border-neutral-800">
+                            <Image
+                                src={image}
+                                alt="Selected post image"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    ) : null}
                     <hr
                         className="
                             opacity-0
@@ -89,9 +122,37 @@ return (
                             transition
                         "
                     />
-                    <div className="mt-4 flex flex-row justify-end">
+                    <div className="mt-4 flex flex-row items-center justify-between">
+                        {!isComment ? (
+                            <label
+                                className="
+                                    flex
+                                    h-10
+                                    w-10
+                                    cursor-pointer
+                                    items-center
+                                    justify-center
+                                    rounded-full
+                                    text-[#c65f32]
+                                    transition
+                                    hover:bg-[#c65f32]
+                                    hover:bg-opacity-10
+                                "
+                            >
+                                <BsImage size={22} />
+                                <input
+                                    type="file"
+                                    accept="image/jpeg,image/png"
+                                    disabled={isLoading}
+                                    onChange={onImageChange}
+                                    className="hidden"
+                                />
+                            </label>
+                        ) : (
+                            <div />
+                        )}
                         <Button 
-                            disabled={isLoading || !body}
+                            disabled={isLoading || (!body && !image)}
                             onClick={onSubmit}
                             label="Post"    
                         />

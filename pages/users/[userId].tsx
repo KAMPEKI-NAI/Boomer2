@@ -20,7 +20,7 @@ const UserView = () => {
                     items-center
                     h-full
                 ">
-               <ClipLoader color="#d94f00" size={80} />
+               <ClipLoader color="#c65f32" size={80} />
             </div>
         )
     }

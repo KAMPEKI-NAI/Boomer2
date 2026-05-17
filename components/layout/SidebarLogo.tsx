@@ -13,7 +13,7 @@ const SidebarLogo = () => {
             flex
             items-center
             justify-center
-            hover:bg-[#d94f00]
+            hover:bg-[#c65f32]
             hover:bg-opacity-10
             cursor-position
             transition"
