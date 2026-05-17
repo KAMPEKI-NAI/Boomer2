@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { BsTwitter } from "react-icons/bs"
+import { BsCloudFill } from "react-icons/bs"
 const SidebarLogo = () => {
     const router = useRouter();
     return ( 
@@ -18,7 +18,7 @@ const SidebarLogo = () => {
             cursor-position
             transition"
         >
-            <BsTwitter size={20} color="white"/>
+            <BsCloudFill size={22} color="white"/>
         </div>
      );
 }
