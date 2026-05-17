@@ -13,7 +13,7 @@ const useFollow = (userId: string) => {
     const loginModel = useLoginModel();
 
     const isFollowing = useMemo(() => {
-        const list = currentUser?.followingId || [];
+        const list = currentUser?.followingIds || [];
 
         return list.includes(userId);
     }, [userId, currentUser?.followingIds]);
@@ -38,7 +38,7 @@ const useFollow = (userId: string) => {
             mutateFetchedUser();
 
             toast.success('Success')
-        } catch(error) {
+        } catch {
             toast.error('Something went wrong')
         }
     }, [currentUser, 

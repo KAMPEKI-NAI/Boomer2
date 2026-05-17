@@ -26,7 +26,7 @@ const Followbar = () => {
                                 <p className="text-white font-semibold">
                                     {user.name}
                                     </p>
-                                <p className="text-gray-500">
+                                <p className="text-neutral-400">
                                     @{user.username}
                                     </p>
                             </div>

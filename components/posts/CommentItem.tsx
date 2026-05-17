@@ -60,7 +60,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ data }) => {
                         </p>
                         <span
                             className="
-                                text-neutral-500
+                                text-neutral-400
                                 cursor-pointer
                                 hover:underline
                                 hidden

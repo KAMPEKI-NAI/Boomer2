@@ -99,7 +99,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                         <span 
                             onClick={goToUser}
                             className='
-                            text-neural-500
+                            text-neutral-400
                             cursor-pointer
                             hover:underline
                             hidden
