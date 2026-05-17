@@ -153,7 +153,7 @@ return (
                         <Button 
                             disabled={isLoading || (!body && !image)}
                             onClick={onSubmit}
-                            label="Post"    
+                            label={isComment ? "Reply" : "Post"}
                         />
                     </div>
                 </div>

@@ -20,9 +20,13 @@ export default async function handler(
             throw new Error('Invalid Id');
         }
 
+        if (!body || typeof body !== 'string' || !body.trim()) {
+            throw new Error('Missing body');
+        }
+
         const comment = await prisma.comment.create({
             data: {
-                body,
+                body: body.trim(),
                 userId: currentUser.id,
                 postId
             }

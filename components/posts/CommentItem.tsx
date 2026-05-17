@@ -19,7 +19,7 @@ interface CommentItemProps {
 const CommentItem: React.FC<CommentItemProps> = ({ data }) => {
     const router = useRouter();
 
-    const goToUser = useCallback((event: MouseEvent<HTMLParagraphElement>) => {
+    const goToUser = useCallback((event: MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
         router.push(`/users/${data.user.id}`);
@@ -59,6 +59,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ data }) => {
                             {data.user.name}
                         </p>
                         <span
+                            onClick={goToUser}
                             className="
                                 text-neutral-400
                                 cursor-pointer

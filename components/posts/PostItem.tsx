@@ -41,10 +41,10 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
         router.push(`/users/${data.user.id}`);
     }, [router, data.user.id])
     
-    const goToPost = useCallback((event: MouseEvent<HTMLDivElement>) => {
+    const goToPost = useCallback((event: MouseEvent<HTMLElement>) => {
         event?.stopPropagation();
 
-        router.push(`/users/${data.id}`);
+        router.push(`/posts/${data.id}`);
     }, [router, data.id]);
 
     const onLike = useCallback((event: MouseEvent<HTMLDivElement>) => {
@@ -128,6 +128,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                     ) : null}
                     <div className="flex flex-row items-center mt-3 gap-10">
                         <div
+                            onClick={goToPost}
                             className="
                                 flex
                                 flex-row
