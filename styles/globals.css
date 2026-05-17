@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-root {
-  @apply: h-fall bg-black
+html,
+body,
+#__next {
+  @apply min-h-full bg-black;
 }
 
 body {
-  @apply: h-fall bg-black
+  @apply text-white;
 }
