@@ -1,7 +1,7 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useNotifications from "@/hooks/useNotifications";
 import { useEffect } from "react";
-import { BsCloudFill } from "react-icons/bs";
+import BrandCloud from "./BrandCloud";
 
 interface Notification {
     id: string;
@@ -46,7 +46,7 @@ const NotificationsFeed = () => {
                         border-neutral-800
                     "
                 >
-                    <BsCloudFill color="white" size={32}/>
+                    <BrandCloud size={32} />
                     <p className='text-white'>
                         {notification.body}
                     </p>

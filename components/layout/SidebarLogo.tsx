@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
-import { BsCloudFill } from "react-icons/bs"
+import BrandCloud from "../BrandCloud";
+
 const SidebarLogo = () => {
     const router = useRouter();
     return ( 
@@ -15,10 +16,10 @@ const SidebarLogo = () => {
             justify-center
             hover:bg-[#c65f32]
             hover:bg-opacity-10
-            cursor-position
+            cursor-pointer
             transition"
         >
-            <BsCloudFill size={22} color="white"/>
+            <BrandCloud size={30} />
         </div>
      );
 }

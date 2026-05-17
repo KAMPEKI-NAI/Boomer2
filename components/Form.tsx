@@ -3,8 +3,6 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import usePosts from '@/hooks/usePosts';
-import useLoginModel from '@/hooks/useLoginModel';
-import useRegisterModel from '@/hooks/useRegisterModel';
 import Button from './Button';
 import Avatar from './Avatar';
 import usePost from "@/hooks/usePost";
@@ -23,9 +21,6 @@ const Form: React.FC<FormProps> = ({
     isComment, 
     postId 
 }) => {
-    const registerModel = useRegisterModel();
-    const loginModel = useLoginModel();
-
     const { data: currentUser } = useCurrentUser();
     const { mutate: mutatePosts } = usePosts();
     const { mutate: mutatePost } = usePost(postId as string);
@@ -76,9 +71,13 @@ const Form: React.FC<FormProps> = ({
             setLoading(false);
         }
         }, [body, image, mutatePosts, isComment, postId, mutatePost]);
+
+    if (!currentUser) {
+        return null;
+    }
+
 return ( 
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
-        {currentUser ? (
             <div className="flex flex-row gap-4">
                 <div>
                     <Avatar userId={currentUser?.id} />
@@ -159,21 +158,6 @@ return (
                     </div>
                 </div>
             </div>
-        ) : (
-            <div className="py-8">
-                <h1 className="text-white text-2xl text-center mb-4 font-bold">
-                    Welcome to Boomer
-                </h1>
-                <div className='flex flex-row items-center justify-center :gap-4'>
-                    <Button label= "Login" onClick={loginModel.onOpen} />
-                    <Button 
-                        label="Register"
-                        onClick={registerModel.onOpen}
-                        secondary
-                    />
-                </div>
-            </div>
-        )}
     </div> 
     );
 }
