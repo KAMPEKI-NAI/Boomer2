@@ -1,8 +1,11 @@
 import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { BsBellFill, BsDot, BsHouseFill } from "react-icons/bs";
+import { BiLogOut } from "react-icons/bi";
 import { FaFeather, FaUser } from "react-icons/fa";
 import { IconType } from "react-icons";
+import { signOut } from "next-auth/react";
+import { useSWRConfig } from "swr";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useLoginModel from "@/hooks/useLoginModel";
@@ -48,6 +51,7 @@ const MobileNavigation = () => {
     const router = useRouter();
     const loginModel = useLoginModel();
     const { data: currentUser } = useCurrentUser();
+    const { mutate } = useSWRConfig();
 
     const goToProtectedRoute = useCallback((href: string) => {
         if (!currentUser) {
@@ -68,6 +72,12 @@ const MobileNavigation = () => {
             document.getElementById("post-composer")?.focus();
         });
     }, [currentUser, loginModel, router]);
+
+    const handleLogout = useCallback(async () => {
+        await signOut({ redirect: false });
+        await mutate('/api/current', null, { revalidate: false });
+        router.push('/');
+    }, [mutate, router]);
 
     return (
         <nav
@@ -99,6 +109,9 @@ const MobileNavigation = () => {
                     onClick={() => goToProtectedRoute(`/users/${currentUser?.id}`)}
                 />
                 <MobileNavigationItem icon={FaFeather} label="Post" onClick={goToComposer} />
+                {currentUser ? (
+                    <MobileNavigationItem icon={BiLogOut} label="Logout" onClick={handleLogout} />
+                ) : null}
             </div>
         </nav>
     );
