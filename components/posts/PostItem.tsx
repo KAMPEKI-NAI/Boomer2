@@ -71,7 +71,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
         <div
             onClick={goToPost}
             className="
-                border-b-1[px]
+                border-b-[1px]
                 border-neutral-800
                 p-5
                 cursor-pointer

@@ -31,21 +31,17 @@ export default async function handler(
         }
 
         let updatedLikedIds = [...(post.likedIds || [])];
+        const hasAlreadyLiked = updatedLikedIds.includes(currentUser.id);
+        const actorName = currentUser.name || currentUser.username || 'Someone';
 
         if (req.method === 'POST') {
-            updatedLikedIds.push(currentUser.id);
+            updatedLikedIds = Array.from(new Set([...updatedLikedIds, currentUser.id]));
 
             try {
-                const post = await prisma.post.findUnique({
-                    where: {
-                        id: postId
-                    }
-                });
-
-                if (post?.userId) {
+                if (post.userId && post.userId !== currentUser.id && !hasAlreadyLiked) {
                     await prisma.notification.create({
                         data: {
-                            body: 'Someone liked your tweet!',
+                            body: `${actorName} liked your post`,
                             userId: post.userId
                         }
                     });

@@ -32,16 +32,17 @@ export default async function handler(
             }
         });
         try {
+            const actorName = currentUser.name || currentUser.username || 'Someone';
             const post = await prisma.post.findUnique({
                 where: {
                     id: postId
                 }
             });
 
-            if (post?.userId) {
+            if (post?.userId && post.userId !== currentUser.id) {
                 await prisma.notification.create({
                     data: {
-                        body: 'Someone replied to your tweet!',
+                        body: `${actorName} replied to your post`,
                         userId: post.userId
                     }
                 });

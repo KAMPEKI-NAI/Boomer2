@@ -20,6 +20,10 @@ export default async function handler(
             throw new Error('Invalid Id');
         }
 
+        if (userId === currentUser.id) {
+            throw new Error('Cannot follow yourself');
+        }
+
         const user = await prisma.user.findUnique({
             where: {
                 id: userId
@@ -31,26 +35,30 @@ export default async function handler(
         }
 
         let updatedFollowingIds = [...(currentUser.followingIds || [])];
+        const hasAlreadyFollowed = updatedFollowingIds.includes(userId);
+        const actorName = currentUser.name || currentUser.username || 'Someone';
 
         if (req.method === 'POST') {
             updatedFollowingIds = Array.from(new Set([...updatedFollowingIds, userId]));
 
             try {
-                await prisma.notification.create({
-                    data: {
-                        body: 'New follower!',
-                        userId
-                    }
-                });
+                if (userId !== currentUser.id && !hasAlreadyFollowed) {
+                    await prisma.notification.create({
+                        data: {
+                            body: `${actorName} has followed you`,
+                            userId
+                        }
+                    });
 
-                await prisma.user.update({
-                    where: {
-                        id: userId
-                    },
-                    data: {
-                        hasNotification: true
-                    }
-                })
+                    await prisma.user.update({
+                        where: {
+                            id: userId
+                        },
+                        data: {
+                            hasNotification: true
+                        }
+                    })
+                }
             } catch(error) {
                 console.log(error);
             }
